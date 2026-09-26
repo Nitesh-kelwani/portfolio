@@ -1,31 +1,40 @@
 @import "tailwindcss";
 
+/* Tokens measured from powder.framer.website: black page, warm white type,
+   translucent white pills, near-black glass panels, one dusk-rose hue. */
 @theme {
-  --color-bg: #060609;
-  --color-surface: #0c0c12;
-  --color-elevated: #13131b;
-  --color-line: rgb(255 255 255 / 0.07);
+  --color-bg: #000000;
+  --color-ink: #fff3f0;
+  --color-soft: rgb(255 255 255 / 0.8);
+  --color-muted: rgb(255 255 255 / 0.65);
+  --color-faint: rgb(255 255 255 / 0.42);
+  --color-dim: rgb(255 255 255 / 0.28);
+  --color-line: rgb(255 255 255 / 0.08);
   --color-line-strong: rgb(255 255 255 / 0.14);
-  --color-ink: #eeeef3;
-  --color-muted: #8d8d9c;
-  --color-faint: #5a5a69;
-  --color-accent: #7076f8;
-  --color-accent-2: #9b8cf8;
-  --color-lilac: #c4c0ff;
-  --color-live: #3ddc97;
-  --color-warn: #f5b945;
-  --color-danger: #f26d6d;
+  --color-card: #0f0f0f;
+  --color-panel: #171717;
+  --color-surface: #121212;
+  --color-dusk: #d39794;
+  --color-accent: #d39794;
+  --color-accent-2: #e8b9a8;
+  --color-lilac: #f3d3ca;
+  --color-live: #93d9b4;
+  --color-warn: #f0c27a;
+  --color-danger: #f08c8c;
 
-  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
-  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
-  --animate-spin-slow: spin 40s linear infinite;
-  --animate-spin-slower: spin 60s linear infinite reverse;
   --animate-blink: blink 1s steps(2, start) infinite;
+  --animate-drift: drift 38s ease-in-out infinite alternate;
+  --animate-drift-slow: drift 60s ease-in-out infinite alternate-reverse;
 
   @keyframes blink {
     to { visibility: hidden; }
+  }
+  @keyframes drift {
+    from { transform: translateX(-6%); }
+    to { transform: translateX(6%); }
   }
 }
 
@@ -40,73 +49,75 @@
     background: var(--color-bg);
     color: var(--color-ink);
     font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
     -webkit-font-smoothing: antialiased;
     overflow-x: clip;
   }
-  ::selection { background: rgb(112 118 248 / 0.35); }
+  ::selection { background: rgb(211 151 148 / 0.4); }
   :focus-visible {
-    outline: 2px solid var(--color-accent);
+    outline: 2px solid rgb(255 243 240 / 0.7);
     outline-offset: 3px;
     border-radius: 8px;
   }
-  input[type="range"] { accent-color: var(--color-accent); }
+  input[type="range"] { accent-color: var(--color-dusk); }
 }
 
 @layer components {
-  /* Tiles: layered gradients instead of backdrop-filter (far cheaper to paint). */
-  .tile {
-    position: relative;
-    border-radius: 1.5rem;
-    border: 1px solid var(--color-line);
-    background:
-      radial-gradient(120% 90% at 0% 0%, rgb(255 255 255 / 0.045), transparent 60%),
-      rgb(12 12 18 / 0.78);
-    box-shadow: 0 1px 0 0 rgb(255 255 255 / 0.04) inset;
-    overflow: hidden;
-  }
-  .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+  /* Type scale (Powder): h1 56/1.3 w400 -0.04em, h2 40/54 w500 -1.6px, lead 28/1.35 -0.84px, small 14/21 -0.28px. */
+  .t-h1 { font-size: clamp(2.35rem, 5.6vw, 3.5rem); line-height: 1.3; font-weight: 400; letter-spacing: -0.04em; }
+  .t-h2 { font-size: clamp(1.9rem, 4vw, 2.5rem); line-height: 1.35; font-weight: 500; letter-spacing: -0.04em; }
+  .t-h3 { font-size: clamp(1.4rem, 2.4vw, 1.75rem); line-height: 1.35; font-weight: 400; letter-spacing: -0.03em; }
+  .t-lead { font-size: clamp(1.35rem, 2.4vw, 1.75rem); line-height: 1.35; font-weight: 400; letter-spacing: -0.03em; }
+  .t-small { font-size: 0.875rem; line-height: 1.5; letter-spacing: -0.02em; }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 30px;
+    padding: 0 0.875rem;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.1);
+    font-size: 0.875rem;
+    letter-spacing: -0.02em;
     color: var(--color-muted);
   }
-  .serif-accent {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    color: var(--color-lilac);
+
+  /* Near-black glass panel used for every app window. */
+  .glass {
+    background: rgb(23 23 23 / 0.85);
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+    box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.08), 0 0 0 1px rgb(255 255 255 / 0.05);
   }
-  .text-gradient {
-    background: linear-gradient(180deg, #ffffff 0%, #c9c9d6 55%, #85859a 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  .glass-soft {
+    background: rgb(23 23 23 / 0.62);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.1), 0 0 0 1px rgb(255 255 255 / 0.06);
   }
+  .card {
+    background: rgb(15 15 15 / 0.85);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.06);
+  }
+
   .chip {
     font-family: var(--font-mono);
     font-size: 0.72rem;
     padding: 0.28rem 0.6rem;
-    border-radius: 999px;
-    border: 1px solid var(--color-line);
-    background: rgb(255 255 255 / 0.03);
-    color: #c6c6d2;
+    border-radius: 8px;
+    background: rgb(255 255 255 / 0.08);
+    color: var(--color-soft);
     white-space: nowrap;
   }
-  .grain::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 90;
-    opacity: 0.03;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  .eyebrow {
+    font-size: 0.8125rem;
+    letter-spacing: -0.01em;
+    color: var(--color-faint);
   }
-  .dots {
-    background-image: radial-gradient(rgb(255 255 255 / 0.06) 1px, transparent 1px);
-    background-size: 18px 18px;
-  }
+
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,4 +1,4 @@
-import { certifications, contact, hero, links, manifesto, mascot, offDuty, path, profile, projects, toolbox } from "@/data/content";
+import { capabilities, certifications, cta, faq, intro, journey, links, profile, projects, toolColumns, workSection } from "@/data/content";
 
 // A tiny, honest hybrid retriever over this page's own content: BM25 keyword
 // scoring and character-trigram similarity, fused with Reciprocal Rank Fusion.
@@ -44,69 +44,67 @@ export function buildCorpus(): Doc[] {
   const docs: Doc[] = [];
   docs.push({
     id: "about",
-    section: "About",
-    anchor: "top",
-    title: "Who is Nitesh?",
-    answer: `${profile.name} is an ${profile.role.toLowerCase()} in ${profile.city}, ${profile.country}. ${hero.body}`,
-    keywords: "who are you about background introduction bio engineer",
-  });
-  docs.push({ id: "now", section: "About", anchor: "top", title: "What he's doing now", answer: `Right now: ${hero.now}`, keywords: "current currently now job work role doing" });
-  docs.push({
-    id: "bit",
-    section: "About",
-    anchor: "top",
-    title: `Who is ${mascot.name}?`,
-    answer: `I'm ${mascot.name}, the little robot on this page. I answer questions from this page only, show my sources, and say so when I don't know. I also blink a lot.`,
-    keywords: "bit robot mascot bot you yourself chatbot assistant logo",
+    section: "Intro",
+    anchor: "intro",
+    title: `Who is ${profile.name}?`,
+    answer: intro.join(" "),
+    keywords: "who are you about background introduction bio engineer nitesh",
   });
   projects.forEach((p) =>
     docs.push({
       id: `project-${p.slug}`,
-      section: "Selected work",
-      anchor: "work",
+      section: workSection.tabs.includes(p.slug) ? "Selected work" : "More builds",
+      anchor: workSection.tabs.includes(p.slug) ? "work" : "more",
       title: p.name,
       answer: `${p.name}: ${p.description}`,
-      keywords: `${p.tagline} ${p.stack.join(" ")} ${p.flow.join(" ")} project built`,
+      keywords: `${p.tagline} ${p.topic} ${p.stack.join(" ")} ${p.flow.join(" ")} project built`,
     }),
   );
-  docs.push({ id: "offduty", section: "Selected work", anchor: "work", title: offDuty.name, answer: `${offDuty.name}: ${offDuty.blurb}`, keywords: "fun side project computer vision webcam hand gesture" });
+  docs.push({
+    id: "rasenshuriken",
+    section: "More builds",
+    anchor: "more",
+    title: "Rasenshuriken CV",
+    answer: "Rasenshuriken CV: cup your hand at the webcam and a spinning chakra blade appears in your palm. MediaPipe and OpenCV, built for fun.",
+    keywords: "fun side project computer vision webcam hand gesture mediapipe opencv",
+  });
+  capabilities.forEach((c) =>
+    docs.push({ id: `build-${c.art}`, section: "What I build", anchor: "build", title: c.title, answer: `${c.title}: ${c.body}`, keywords: "build capability capabilities skill do offer" }),
+  );
   docs.push({
     id: "lab",
     section: "Lab",
     anchor: "lab",
     title: "The lab",
-    answer: "The lab has three in-browser demos: a chunking visualiser that shows how chunk size and overlap change what a retriever sees, a read-only SQL guard like the one in my SQL Chatbot, and a streaming-versus-blocking comparison.",
+    answer: "The lab has three in-browser demos: a chunking visualiser that shows how chunk size and strategy change what a retriever sees, a read-only SQL guard like the one in the SQL Chatbot, and a streaming-versus-blocking comparison.",
     keywords: "demo demos lab chunk chunking overlap sql guard streaming latency interactive",
   });
-  path.forEach((m, i) =>
-    docs.push({ id: `path-${i}`, section: "Path", anchor: "path", title: `${m.when} · ${m.title}`, answer: `${m.when}: ${m.title}. ${m.body}`, keywords: "experience career education timeline history journey internship degree" }),
+  journey.forEach((m, i) =>
+    docs.push({ id: `journey-${i}`, section: "Journey", anchor: "journey", title: `${m.when} · ${m.title}`, answer: `${m.when}: ${m.title}. ${m.body}`, keywords: "experience career education timeline history journey internship degree study studied college" }),
   );
-  toolbox.forEach((g) =>
-    docs.push({
-      id: `tools-${g.group}`,
-      section: "Toolbox",
-      anchor: "toolbox",
-      title: g.group,
-      answer: `${g.group}: ${g.tools.map((t) => t.name).join(", ")}.`,
-      keywords: "skill skills tool tools technology stack language framework",
-    }),
+  toolColumns.forEach((c) =>
+    docs.push({ id: `tools-${c.title}`, section: "Toolbox", anchor: "toolbox", title: c.title, answer: `${c.title}: ${c.body}`, keywords: "skill skills tool tools technology stack language framework" }),
   );
   docs.push({
     id: "providers",
     section: "Toolbox",
     anchor: "toolbox",
     title: "LLM providers",
-    answer: "LLM providers across my public projects: Azure OpenAI (GPT-4o and ada-002 embeddings), Google Gemini, and Groq running Llama 3.3. I also use LiteLLM to keep code provider-agnostic.",
+    answer: "LLM providers across the public projects: Azure OpenAI (GPT-4o and ada-002 embeddings), Google Gemini, and Groq running Llama 3.3, with LiteLLM to keep code provider-agnostic.",
     keywords: "model models provider vendor openai gpt gemini groq llama litellm llm",
   });
-  docs.push({ id: "certs", section: "Toolbox", anchor: "toolbox", title: "Certifications", answer: `Certifications: ${certifications.join(", ")}.`, keywords: "certificate certified dp-100 microsoft azure red hat cisco linux" });
-  docs.push({ id: "manifesto", section: "Approach", anchor: "approach", title: "How he works", answer: manifesto.replace(/\*/g, ""), keywords: "approach philosophy belief values principle evals honest work" });
+  docs.push({ id: "certs", section: "Journey", anchor: "journey", title: "Certifications", answer: `Certifications: ${certifications.join(", ")}.`, keywords: "certificate certified dp-100 microsoft azure red hat cisco linux" });
+  faq.forEach((g) =>
+    g.items.forEach((it, i) =>
+      docs.push({ id: `faq-${g.group}-${i}`, section: "FAQ", anchor: "faq", title: it.q, answer: it.a, keywords: `faq question ${g.group}` }),
+    ),
+  );
   docs.push({
     id: "contact",
     section: "Contact",
     anchor: "contact",
     title: "How to reach him",
-    answer: `${contact.body} Email ${links.email}, or find him on LinkedIn and GitHub.`,
+    answer: `${cta.body} Email ${links.email}, or find him on LinkedIn and GitHub.`,
     keywords: "contact email hire hiring reach call book linkedin github talk",
   });
   return docs;

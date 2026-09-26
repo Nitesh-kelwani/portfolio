@@ -1,28 +1,31 @@
 # nitesh-kelwani · portfolio
 
-Personal site of **Nitesh Kelwani**, AI engineer. *I build AI that shows its work.*
+Personal site of **Nitesh Kelwani**, AI engineer building assistants people can trust.
 
-**Stack:** React 19 · TypeScript · Vite · Tailwind CSS v4 · Motion · Lenis · WebGL · simple-icons. Deployed on Vercel.
+**Stack:** React 19 · TypeScript · Vite · Tailwind CSS v4 · Motion · Lenis · simple-icons. Deployed on Vercel.
+
+The layout and motion follow the structure of the Powder Framer template (dusk landscape, layered parallax hero, app-window
+showcases). Every asset here is original: the landscape, clouds, isometric art and logo are drawn in code.
 
 ## What's interesting in here
 
-- **Ask my portfolio** (`src/components/sections/AskTile.tsx`, `src/lib/retrieval.ts`): a tiny in-browser search engine over
+- **Ask my portfolio** (`src/components/sections/AskWindow.tsx`, `src/lib/retrieval.ts`): a tiny in-browser search engine over
   the page's own content, using BM25 keyword scoring plus character-trigram fuzzy matching, fused by rank. It streams back
-  the best passage with citations and a retrieval trace, and says so when nothing matches. No LLM, so no made-up facts.
-- **Bit, the mascot** (`src/components/ui/Mascot.tsx`): a hand-drawn SVG robot whose eyes follow the cursor anywhere on
-  the page. It blinks on its own and beams when clicked.
-- **Aurora** (`src/components/ui/Aurora.tsx`): a small fragment shader rendered at a third of display resolution, paused
-  when off-screen, disabled for reduced motion.
-- **Selected work**: a sticky-scroll showcase with hand-built, animated product mocks for each project
-  (`src/components/sections/mocks.tsx`).
-- **The lab**: a chunking visualiser, a read-only SQL guard and a streaming-vs-blocking demo, all client-side.
-- **Toolbox**: hover a tool to light up the projects that actually use it.
-- Floating dock navigation, ⌘K command menu, scroll-driven horizontal timeline, word-by-word manifesto reveal.
+  the best passage with its sources, and says so when nothing matches. No LLM, so no made-up facts.
+- **A landscape drawn in code** (`src/components/ui/Landscape.tsx`): ridges are sums of seeded sine waves, the forest is rows
+  of textured tree crowns, and each layer is its own SVG so the hero can move them at different speeds
+  (0.31 / 0.20 / 0.17 of scroll).
+- **Projects** (`src/components/sections/ProjectTabs.tsx`): auto-advancing tabs over an app window, with animated
+  product sketches for each project (`src/components/sections/mocks.tsx`).
+- **The lab** (`src/components/sections/LabStack.tsx`, `src/lib/lab.ts`): a chunking visualiser, a read-only SQL guard and a
+  streaming-vs-blocking demo, in cards that stick and stack as you scroll.
+- Isometric line art built from a small projection helper (`src/components/ui/IsoArt.tsx`), an orbiting toolbox,
+  count-up numbers and a scroll-lit intro.
 
 ## Editing content
 
-All copy lives in [`src/data/content.ts`](src/data/content.ts): hero text, projects, lab samples, timeline, toolbox and
-contact. Set `links.booking` to a Cal.com/Calendly URL to turn "Let's talk" into a scheduler link.
+All copy lives in [`src/data/content.ts`](src/data/content.ts): hero, intro, projects, lab, toolbox, journey, numbers,
+FAQ and contact. Set `links.booking` to a Cal.com/Calendly URL to turn "Get in touch" into a scheduler link.
 
 ## Run locally
 

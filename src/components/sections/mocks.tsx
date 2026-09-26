@@ -15,7 +15,7 @@ function Bubble({ children, side = "left", className }: { children: React.ReactN
       variants={item}
       className={cn(
         "max-w-[88%] rounded-2xl px-3 py-2 text-[12px] leading-relaxed",
-        side === "right" ? "ml-auto rounded-tr-sm bg-accent/20 text-ink" : "rounded-tl-sm border border-line bg-white/[0.03] text-ink",
+        side === "right" ? "ml-auto bg-white/10 text-ink" : "border border-line bg-white/[0.03] text-soft",
         className,
       )}
     >
@@ -25,7 +25,7 @@ function Bubble({ children, side = "left", className }: { children: React.ReactN
 }
 
 const Cite = ({ n }: { n: number }) => (
-  <span className="mx-0.5 rounded border border-accent/40 bg-accent/15 px-1 font-mono text-[9px] text-lilac">{n}</span>
+  <span className="mx-0.5 rounded bg-white/15 px-1 text-[9px] text-ink">{n}</span>
 );
 
 function Bar({ label, value, warn, active }: { label: string; value: number; warn?: boolean; active: boolean }) {
@@ -37,7 +37,7 @@ function Bar({ label, value, warn, active }: { label: string; value: number; war
       </div>
       <div className="mt-1 h-1.5 rounded-full bg-white/[0.06]">
         <motion.div
-          className={cn("h-full rounded-full", warn ? "bg-warn/80" : "bg-gradient-to-r from-accent to-accent-2")}
+          className={cn("h-full rounded-full", warn ? "bg-warn/80" : "bg-white/60")}
           initial={false}
           animate={{ width: active ? `${value}%` : "0%" }}
           transition={{ duration: 1.1, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
@@ -78,7 +78,7 @@ function MediragMock({ active }: { active: boolean }) {
         <motion.p
           className="mt-3 rounded-md px-1.5 py-1 text-[11px] leading-relaxed text-ink"
           initial={false}
-          animate={{ backgroundColor: active ? "rgba(112,118,248,0.22)" : "rgba(112,118,248,0)" }}
+          animate={{ backgroundColor: active ? "rgba(211,151,148,0.28)" : "rgba(211,151,148,0)" }}
           transition={{ delay: 1.4, duration: 0.6 }}
         >
           DISCHARGE MEDICATIONS: Metformin 500 mg PO BD with meals.
@@ -160,7 +160,7 @@ function DocQaMock({ active }: { active: boolean }) {
           <motion.div
             key={d}
             variants={item}
-            className="absolute inset-x-0 rounded-xl border border-line bg-[#101019] p-3"
+            className="absolute inset-x-0 rounded-xl border border-line bg-[#161616] p-3"
             style={{ top: i * 26, bottom: (docs.length - 1 - i) * 10, zIndex: i }}
           >
             <p className="flex items-center gap-1.5 font-mono text-[9px] text-muted">
@@ -173,7 +173,7 @@ function DocQaMock({ active }: { active: boolean }) {
                   className="h-1.5 rounded"
                   style={{ width: `${w}%` }}
                   initial={false}
-                  animate={{ backgroundColor: active && i === 1 && j === 3 ? "rgba(112,118,248,0.55)" : "rgba(255,255,255,0.06)" }}
+                  animate={{ backgroundColor: active && i === 1 && j === 3 ? "rgba(211,151,148,0.7)" : "rgba(255,255,255,0.06)" }}
                   transition={{ delay: 1.3, duration: 0.5 }}
                 />
               ))}
@@ -184,7 +184,7 @@ function DocQaMock({ active }: { active: boolean }) {
       <div className="flex flex-col gap-2.5">
         <Bubble side="right">Can I work remotely on Fridays?</Bubble>
         <motion.div variants={item} className="rounded-lg border border-line bg-black/30 p-2.5 font-mono text-[10px] leading-4 text-muted">
-          <span className="flex items-center gap-1 text-lilac">
+          <span className="flex items-center gap-1 text-soft">
             <Wrench className="h-3 w-3" /> tool call
           </span>
           search_docs(<span className="text-live">"remote work"</span>,<br />
@@ -195,7 +195,7 @@ function DocQaMock({ active }: { active: boolean }) {
         </motion.div>
         <Bubble>
           Yes. Up to two remote days a week, Fridays included, with your manager's approval.
-          <span className="mt-1.5 block font-mono text-[9px] text-lilac">[policy.pdf · p.4]</span>
+          <span className="mt-1.5 block font-mono text-[9px] text-faint">[policy.pdf · p.4]</span>
         </Bubble>
       </div>
     </motion.div>
@@ -209,7 +209,7 @@ function AuditMock({ active }: { active: boolean }) {
   return (
     <motion.div className="flex h-full flex-col gap-3 p-4" variants={seq(0.12)} initial="off" animate={active ? "on" : "off"}>
       <motion.div variants={item} className="flex items-center gap-2.5">
-        <span className="h-8 w-8 rounded-full bg-gradient-to-br from-accent-2 to-warn" />
+        <span className="h-8 w-8 rounded-full bg-gradient-to-br from-dusk to-warn" />
         <div>
           <p className="text-[12px] font-medium text-ink">@studio.handle</p>
           <p className="font-mono text-[9px] text-faint">last 30 posts · sample data</p>
@@ -231,7 +231,7 @@ function AuditMock({ active }: { active: boolean }) {
         {days.map(([d, v], i) => (
           <div key={i} className="flex h-full flex-1 flex-col items-center justify-end gap-1">
             <motion.div
-              className={cn("w-full rounded-md", v > 80 ? "bg-gradient-to-t from-accent to-accent-2" : "bg-white/[0.1]")}
+              className={cn("w-full rounded-md", v > 80 ? "bg-white/70" : "bg-white/[0.12]")}
               initial={false}
               animate={{ height: active ? `${v}%` : "4%" }}
               transition={{ duration: 0.9, delay: 0.6 + i * 0.06, ease: [0.22, 1, 0.36, 1] }}
@@ -240,10 +240,10 @@ function AuditMock({ active }: { active: boolean }) {
           </div>
         ))}
       </motion.div>
-      <motion.div variants={item} className="rounded-xl border border-accent/25 bg-accent/[0.07] p-2.5 text-[11.5px] leading-relaxed text-ink">
-        <span className="font-mono text-[9px] text-lilac">LLM INSIGHT · </span>Captions that end with a question draw about twice the comments.
+      <motion.div variants={item} className="rounded-xl bg-white/[0.06] p-2.5 text-[11.5px] leading-relaxed text-ink">
+        <span className="font-mono text-[9px] text-dusk">LLM INSIGHT · </span>Captions that end with a question draw about twice the comments.
       </motion.div>
-      <motion.button variants={item} type="button" tabIndex={-1} className="inline-flex w-fit items-center gap-1.5 rounded-full bg-ink px-3 py-1.5 text-[11px] font-medium text-bg">
+      <motion.button variants={item} type="button" tabIndex={-1} className="inline-flex w-fit items-center gap-1.5 rounded-full bg-white/80 px-3 py-1.5 text-[11px] font-medium text-black">
         <Download className="h-3 w-3" /> audit_report.xlsx
       </motion.button>
     </motion.div>
@@ -256,9 +256,9 @@ function VoiceMock({ active }: { active: boolean }) {
     <motion.div className="flex h-full flex-col items-center gap-3 p-4" variants={seq(0.16)} initial="off" animate={active ? "on" : "off"}>
       <motion.div variants={item} className="relative mt-2 grid h-16 w-16 place-items-center">
         {active && (
-          <motion.span className="absolute inset-0 rounded-full border border-accent/50" animate={{ scale: [1, 1.6], opacity: [0.7, 0] }} transition={{ duration: 1.6, repeat: Infinity }} />
+          <motion.span className="absolute inset-0 rounded-full border border-white/40" animate={{ scale: [1, 1.6], opacity: [0.7, 0] }} transition={{ duration: 1.6, repeat: Infinity }} />
         )}
-        <span className="grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-accent to-accent-2 text-white shadow-[0_0_30px_rgb(112_118_248/0.5)]">
+        <span className="grid h-14 w-14 place-items-center rounded-full bg-white/80 text-black shadow-[0_0_30px_rgb(255_243_240/0.25)]">
           <Mic className="h-6 w-6" />
         </span>
       </motion.div>
@@ -266,13 +266,13 @@ function VoiceMock({ active }: { active: boolean }) {
         {bars.map((b, i) => (
           <motion.span
             key={i}
-            className="w-[3px] rounded-full bg-lilac/80"
+            className="w-[3px] rounded-full bg-white/60"
             animate={active ? { height: [`${b * 30}%`, `${(1 - b) * 70 + 30}%`, `${b * 30}%`] } : { height: "20%" }}
             transition={{ duration: 0.9 + (i % 5) * 0.12, repeat: Infinity, ease: "easeInOut" }}
           />
         ))}
       </motion.div>
-      <motion.p variants={item} className="text-center font-serif text-lg italic text-ink">“Send five hundred dirhams to Sara.”</motion.p>
+      <motion.p variants={item} className="text-center text-lg font-light tracking-[-0.02em] text-ink">“Send five hundred dirhams to Sara.”</motion.p>
       <motion.div variants={item} className="w-full max-w-sm">
         <Typed
           active={active}
@@ -288,7 +288,7 @@ function VoiceMock({ active }: { active: boolean }) {
         />
       </motion.div>
       <Bubble className="flex max-w-sm items-center gap-2 self-stretch">
-        <Volume2 className="h-3.5 w-3.5 shrink-0 text-lilac" /> Sure. What's Sara's account number?
+        <Volume2 className="h-3.5 w-3.5 shrink-0 text-soft" /> Sure. What's Sara's account number?
       </Bubble>
     </motion.div>
   );
@@ -302,7 +302,7 @@ function PipelineMock({ active }: { active: boolean }) {
         <div className="absolute top-4 bottom-4 left-[15px] w-px bg-line-strong" />
         {active && (
           <motion.span
-            className="absolute left-[11px] h-2.5 w-2.5 rounded-full bg-lilac shadow-[0_0_14px_4px_rgb(196_192_255/0.6)]"
+            className="absolute left-[11px] h-2.5 w-2.5 rounded-full bg-ink shadow-[0_0_14px_4px_rgb(255_243_240/0.45)]"
             animate={{ top: ["4%", "92%"] }}
             transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.4 }}
           />

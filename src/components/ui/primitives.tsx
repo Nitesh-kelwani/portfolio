@@ -1,8 +1,8 @@
-import { motion, useMotionValue, useSpring } from "motion/react";
-import { useRef, useState, type MouseEvent, type ReactNode } from "react";
+import { motion } from "motion/react";
+import { useState, type ReactNode } from "react";
 import { Check, Copy } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { fadeUp } from "@/lib/motion";
+import { fadeUp, stagger } from "@/lib/motion";
 
 export function Reveal({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
   return (
@@ -11,7 +11,7 @@ export function Reveal({ children, className, delay = 0 }: { children: ReactNode
       variants={fadeUp}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={{ once: true, margin: "-80px" }}
       transition={{ delay }}
     >
       {children}
@@ -19,41 +19,119 @@ export function Reveal({ children, className, delay = 0 }: { children: ReactNode
   );
 }
 
-/** Section header: mono eyebrow + sans headline with an italic serif accent. */
-export function SectionHeader({ eyebrow, lead, accent, body, className }: {
-  eyebrow: string;
-  lead: string;
-  accent?: string;
-  body?: string;
-  className?: string;
-}) {
-  return (
-    <Reveal className={cn("max-w-3xl", className)}>
-      <p className="eyebrow">{eyebrow}</p>
-      <h2 className="mt-4 text-4xl leading-[1.05] font-semibold tracking-[-0.03em] text-balance sm:text-5xl md:text-6xl">
-        <span className="text-gradient">{lead}</span>
-        {accent && <span className="serif-accent"> {accent}</span>}
-      </h2>
-      {body && <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted text-pretty">{body}</p>}
-    </Reveal>
-  );
-}
-
 export function Container({ id, children, className }: { id?: string; children: ReactNode; className?: string }) {
   return (
-    <section id={id} className={cn("relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8", className)}>
+    <section id={id} className={cn("relative mx-auto w-full max-w-[1112px] px-4 sm:px-6", className)}>
       {children}
     </section>
   );
 }
 
-export function Chips({ items, className }: { items: string[]; className?: string }) {
+/** Small translucent pill with a dot: the label above every section title. */
+export function SectionTag({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className={cn("flex flex-wrap gap-1.5", className)}>
-      {items.map((item) => (
-        <span key={item} className="chip">{item}</span>
-      ))}
-    </div>
+    <span className={cn("pill", className)}>
+      <span className="h-1.5 w-1.5 rounded-full bg-soft" />
+      {children}
+    </span>
+  );
+}
+
+/** Tag, two-tone headline (white then muted) and a short side paragraph. */
+export function SectionHead({ tag, title, muted, side, aside, className }: {
+  tag: string;
+  title: string;
+  muted?: string;
+  side?: string;
+  aside?: ReactNode;
+  className?: string;
+}) {
+  return (
+    <motion.div
+      className={cn("grid gap-6 md:grid-cols-[1fr_auto] md:items-end", className)}
+      variants={stagger(0.1)}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-80px" }}
+    >
+      <div>
+        <motion.div variants={fadeUp}>
+          <SectionTag>{tag}</SectionTag>
+        </motion.div>
+        <motion.h2 variants={fadeUp} className="t-h2 mt-5 max-w-[560px] text-balance">
+          {title}
+          {muted && <span className="text-muted"> {muted}</span>}
+        </motion.h2>
+      </div>
+      {side && (
+        <motion.p variants={fadeUp} className="t-small max-w-[300px] pb-2 text-soft md:max-w-[340px]">
+          {side}
+        </motion.p>
+      )}
+      {aside && <motion.div variants={fadeUp} className="pb-2">{aside}</motion.div>}
+    </motion.div>
+  );
+}
+
+/** Primary pill button (Powder's "Get started"). */
+export function PillLink({ href, children, className, variant = "light", onClick }: {
+  href: string;
+  children: ReactNode;
+  className?: string;
+  variant?: "light" | "dark";
+  onClick?: () => void;
+}) {
+  const external = href.startsWith("http");
+  return (
+    <a
+      href={href}
+      onClick={onClick}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
+      className={cn(
+        "inline-flex h-12 items-center justify-center gap-2 rounded-full px-7 text-[15px] tracking-[-0.02em] transition-[background-color,transform] duration-300 active:scale-[0.97]",
+        variant === "light" ? "bg-white/80 text-black hover:bg-white" : "bg-white/10 text-ink hover:bg-white/15",
+        className,
+      )}
+    >
+      {children}
+    </a>
+  );
+}
+
+/** Round 48px icon button (Powder's play button). */
+export function RoundLink({ href, label, children, className }: { href: string; label: string; children: ReactNode; className?: string }) {
+  const external = href.startsWith("http");
+  return (
+    <a
+      href={href}
+      aria-label={label}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
+      className={cn("grid h-12 w-12 place-items-center rounded-full bg-white/10 text-ink backdrop-blur-md transition-colors hover:bg-white/20", className)}
+    >
+      {children}
+    </a>
+  );
+}
+
+export function RoundButton({ onClick, label, children, className, disabled }: {
+  onClick: () => void;
+  label: string;
+  children: ReactNode;
+  className?: string;
+  disabled?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      disabled={disabled}
+      className={cn("grid h-12 w-12 place-items-center rounded-full bg-white/10 text-ink transition-colors hover:bg-white/20 disabled:opacity-40", className)}
+    >
+      {children}
+    </button>
   );
 }
 
@@ -75,10 +153,7 @@ export function CopyButton({ text, label, className }: { text: string; label?: s
     <button
       type="button"
       onClick={copy}
-      className={cn(
-        "inline-flex items-center gap-2 rounded-full border border-line px-4 py-2.5 font-mono text-[13px] text-muted transition-colors hover:border-line-strong hover:text-ink",
-        className,
-      )}
+      className={cn("inline-flex h-12 items-center gap-2 rounded-full px-5 text-[15px] tracking-[-0.02em] text-soft transition-colors hover:text-ink", className)}
       aria-live="polite"
     >
       <span className="relative h-4 w-4">
@@ -89,61 +164,8 @@ export function CopyButton({ text, label, className }: { text: string; label?: s
           <Check className="h-4 w-4" />
         </motion.span>
       </span>
-      {copied ? "Copied to clipboard" : label ?? text}
+      {copied ? "Copied" : label ?? text}
     </button>
-  );
-}
-
-/** A button that leans toward the cursor and springs back (after Aceternity's Magnetic Button). */
-export function MagneticLink({ href, children, className, variant = "primary" }: {
-  href: string;
-  children: ReactNode;
-  className?: string;
-  variant?: "primary" | "ghost";
-}) {
-  const ref = useRef<HTMLAnchorElement>(null);
-  const x = useSpring(useMotionValue(0), { stiffness: 220, damping: 16, mass: 0.4 });
-  const y = useSpring(useMotionValue(0), { stiffness: 220, damping: 16, mass: 0.4 });
-
-  function onMove(e: MouseEvent<HTMLAnchorElement>) {
-    const r = ref.current!.getBoundingClientRect();
-    x.set((e.clientX - (r.left + r.width / 2)) * 0.28);
-    y.set((e.clientY - (r.top + r.height / 2)) * 0.35);
-  }
-  function reset() {
-    x.set(0);
-    y.set(0);
-  }
-
-  const external = href.startsWith("http");
-  return (
-    <motion.a
-      ref={ref}
-      href={href}
-      target={external ? "_blank" : undefined}
-      rel={external ? "noreferrer" : undefined}
-      onMouseMove={onMove}
-      onMouseLeave={reset}
-      style={{ x, y }}
-      className={cn(
-        "inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition-colors",
-        variant === "primary"
-          ? "bg-ink text-bg shadow-[0_8px_30px_-8px_rgb(112_118_248/0.55)] hover:bg-white"
-          : "border border-line-strong text-ink hover:bg-white/[0.04]",
-        className,
-      )}
-    >
-      {children}
-    </motion.a>
-  );
-}
-
-export function LiveDot({ className }: { className?: string }) {
-  return (
-    <span className={cn("relative inline-flex h-2 w-2", className)}>
-      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-live opacity-50" />
-      <span className="relative inline-flex h-2 w-2 rounded-full bg-live" />
-    </span>
   );
 }
 
@@ -163,18 +185,10 @@ export function LinkedinIcon({ className }: { className?: string }) {
   );
 }
 
-/** macOS-style window chrome for the product mocks. */
-export function WindowFrame({ title, children, className }: { title: string; children: ReactNode; className?: string }) {
+export function KaggleIcon({ className }: { className?: string }) {
   return (
-    <div className={cn("flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line-strong bg-[#0b0b12] shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9)]", className)}>
-      <div className="flex items-center gap-2 border-b border-line px-4 py-3">
-        <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/80" />
-        <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]/80" />
-        <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/80" />
-        <span className="ml-3 truncate font-mono text-[11px] text-faint">{title}</span>
-        <span className="ml-auto rounded-full border border-line px-2 py-0.5 font-mono text-[9px] tracking-wider text-faint uppercase">illustrative</span>
-      </div>
-      <div className="relative min-h-0 flex-1">{children}</div>
-    </div>
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
+      <path d="M18.83 23.84c-.02.1-.12.16-.3.16h-3.08a.4.4 0 0 1-.36-.2l-5.1-6.48-1.42 1.35v5.03c0 .2-.1.3-.3.3H5.87c-.2 0-.3-.1-.3-.3V.3c0-.2.1-.3.3-.3h2.4c.2 0 .3.1.3.3v14.37l6.13-6.2c.1-.1.2-.16.34-.16h3.2c.14 0 .23.06.27.18.04.13.03.22-.03.28l-6.47 6.28 6.75 8.47c.1.1.1.2.07.32" />
+    </svg>
   );
 }
