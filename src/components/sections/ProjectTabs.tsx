@@ -72,7 +72,7 @@ export function ProjectTabs() {
         >
           <AnimatePresence initial={false}>
             <motion.div key={p.slug} className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }}>
-              <Scene className="h-full w-full" seedShift={i * 3 + 1} clouds={i % 2 === 1} accent={i === 2 ? "moon" : "none"} />
+              <Scene className="h-full w-full" photo={(["dusk", "valley", "forest", "golden"] as const)[i]} clouds={i % 2 === 1} />
             </motion.div>
           </AnimatePresence>
 

@@ -26,7 +26,7 @@ export function Hero() {
       />
 
       {/* far hills */}
-      <motion.div className="absolute inset-x-0 bottom-0 -z-10 h-[300px] will-change-transform sm:h-[420px] lg:h-[526px]" style={{ y: backY }}>
+      <motion.div className="absolute inset-x-0 bottom-0 -z-10 h-[480px] will-change-transform sm:h-[660px] lg:h-[880px]" style={{ y: backY }}>
         <motion.div className="h-full" {...rise(0, 72)}>
           <HeroBackHills />
         </motion.div>
@@ -75,8 +75,8 @@ export function Hero() {
       </motion.div>
 
       {/* near forest: sits above the window so it sinks into the landscape */}
-      <motion.div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[300px] will-change-transform sm:h-[380px] lg:h-[490px]" style={{ y: frontY }}>
-        <motion.div className="h-full" initial={{ y: 48 }} animate={{ y: 0 }} transition={spring.enter}>
+      <motion.div className="pointer-events-none absolute inset-x-0 -bottom-16 z-10 overflow-hidden will-change-transform sm:-bottom-28 lg:-bottom-[170px]" style={{ y: frontY }}>
+        <motion.div initial={{ y: 48 }} animate={{ y: 0 }} transition={spring.enter}>
           <HeroFrontHills />
         </motion.div>
       </motion.div>

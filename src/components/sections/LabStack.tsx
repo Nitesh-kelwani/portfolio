@@ -249,7 +249,7 @@ export function LabStack() {
                   <Sparkle className="h-3.5 w-3.5" strokeWidth={1.5} /> {c.note}
                 </p>
               </div>
-              <Scene className="flex min-h-[520px] items-center justify-center p-5 sm:p-8" seedShift={i * 5 + 2} clouds={i === 1}>
+              <Scene className="flex min-h-[520px] items-center justify-center p-5 sm:p-8" photo={(["valley", "dusk", "forest"] as const)[i]} clouds={i === 1}>
                 <div className="glass-soft relative z-10 w-full max-w-[400px] rounded-[22px] p-5">{widgets[i]}</div>
               </Scene>
             </article>

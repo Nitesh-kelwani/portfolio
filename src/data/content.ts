@@ -318,9 +318,9 @@ export const moreSection = {
 };
 
 export const moreBuilds = [
-  { name: "A voice banking assistant that turns speech into structured actions", topic: "Voice AI", stack: "Gemini · OpenCV", repo: "https://github.com/Nitesh-kelwani/ai-voice-banking-assistant", scene: 0 },
-  { name: "The whole RAG loop, in two readable files on Azure", topic: "Reference RAG", stack: "Azure AI Search", repo: "https://github.com/Nitesh-kelwani/azure-rag-pipeline", scene: 1 },
-  { name: "Rasenshuriken CV: a spinning chakra blade in your palm", topic: "Computer vision", stack: "MediaPipe · OpenCV", repo: "https://github.com/Nitesh-kelwani/rasenshuriken-cv", scene: 2 },
+  { name: "A voice banking assistant that turns speech into structured actions", topic: "Voice AI", stack: "Gemini · OpenCV", repo: "https://github.com/Nitesh-kelwani/ai-voice-banking-assistant" },
+  { name: "The whole RAG loop, in two readable files on Azure", topic: "Reference RAG", stack: "Azure AI Search", repo: "https://github.com/Nitesh-kelwani/azure-rag-pipeline" },
+  { name: "Rasenshuriken CV: a spinning chakra blade in your palm", topic: "Computer vision", stack: "MediaPipe · OpenCV", repo: "https://github.com/Nitesh-kelwani/rasenshuriken-cv" },
 ];
 
 export const certifications = [

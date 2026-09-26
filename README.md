@@ -5,16 +5,16 @@ Personal site of **Nitesh Kelwani**, AI engineer building assistants people can 
 **Stack:** React 19 · TypeScript · Vite · Tailwind CSS v4 · Motion · Lenis · simple-icons. Deployed on Vercel.
 
 The layout and motion follow the structure of the Powder Framer template (dusk landscape, layered parallax hero, app-window
-showcases). Every asset here is original: the landscape, clouds, isometric art and logo are drawn in code.
+showcases). No template assets are used: the landscape layers are free Unsplash photos, cut and colour-graded for this site,
+and the isometric art and logo are drawn in code.
 
 ## What's interesting in here
 
 - **Ask my portfolio** (`src/components/sections/AskWindow.tsx`, `src/lib/retrieval.ts`): a tiny in-browser search engine over
   the page's own content, using BM25 keyword scoring plus character-trigram fuzzy matching, fused by rank. It streams back
   the best passage with its sources, and says so when nothing matches. No LLM, so no made-up facts.
-- **A landscape drawn in code** (`src/components/ui/Landscape.tsx`): ridges are sums of seeded sine waves, the forest is rows
-  of textured tree crowns, and each layer is its own SVG so the hero can move them at different speeds
-  (0.31 / 0.20 / 0.17 of scroll).
+- **A layered photo landscape** (`src/components/ui/Landscape.tsx`, `public/scenes/`): far hills and a forest valley, each
+  cut from its sky as its own image so the hero can move them at different speeds (0.31 / 0.20 / 0.17 of scroll).
 - **Projects** (`src/components/sections/ProjectTabs.tsx`): auto-advancing tabs over an app window, with animated
   product sketches for each project (`src/components/sections/mocks.tsx`).
 - **The lab** (`src/components/sections/LabStack.tsx`, `src/lib/lab.ts`): a chunking visualiser, a read-only SQL guard and a
@@ -39,3 +39,9 @@ npm run build    # type-check + production build into dist/
 
 Import the repo in Vercel. It detects Vite automatically (build `npm run build`, output `dist`). Every push to `main`
 redeploys.
+
+## Photo credits
+
+Landscape layers are graded from photos on [Unsplash](https://unsplash.com), used under the Unsplash License:
+Spencer DeMera (hills), Khyta (forest), Vazgen (dusk hills), Eva Darron (valley), Shirleen Okt (golden hills),
+Noah Ridge (forest at sunset), C Dustin and engin akyurt (clouds).

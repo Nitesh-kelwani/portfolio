@@ -61,7 +61,7 @@ export function Numbers() {
       <div ref={cards} className="relative mt-14 grid gap-5 md:grid-cols-2">
         {numbers.big.map((b, i) => (
           <Reveal key={b.label} delay={i * 0.1} className={i === 1 ? "md:mt-14" : ""}>
-            <Scene className="h-[520px] rounded-[20px] shadow-[inset_0_0_0_1px_rgb(255_255_255/0.08)] md:h-[640px]" seedShift={i * 7 + 20}>
+            <Scene className="h-[520px] rounded-[20px] shadow-[inset_0_0_0_1px_rgb(255_255_255/0.08)] md:h-[640px]" photo={i === 0 ? "dusk" : "golden"} position="50% 70%">
               <div className="relative z-10 p-7 sm:p-8">
                 <p className="flex items-baseline gap-3 leading-none tracking-[-0.05em] text-ink">
                   <Count to={b.value} className="text-[88px] font-normal sm:text-[104px]" />
@@ -77,10 +77,10 @@ export function Numbers() {
         ))}
 
         <motion.div className="pointer-events-none absolute top-[42%] -left-[6%] z-20 w-[34%] opacity-90" style={{ y: cloudA }}>
-          <Cloud seed={31} className="w-full" />
+          <Cloud variant="a" className="w-full" />
         </motion.div>
         <motion.div className="pointer-events-none absolute top-[4%] -right-[4%] z-20 w-[22%] opacity-80" style={{ y: cloudB }}>
-          <Cloud seed={44} className="w-full" />
+          <Cloud variant="b" className="w-full" />
         </motion.div>
       </div>
 

@@ -2,10 +2,10 @@ import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { moreBuilds, moreSection } from "@/data/content";
 import { fadeUp, stagger } from "@/lib/motion";
-import { Scene, type SceneAccent } from "@/components/ui/Landscape";
+import { Scene, type ScenePhoto } from "@/components/ui/Landscape";
 import { SectionHead } from "@/components/ui/primitives";
 
-const accents: SceneAccent[] = ["moon", "path", "tree"];
+const photos: ScenePhoto[] = ["forest", "valley", "golden"];
 
 /** Powder's blog row: three image cards, title, meta. */
 export function MoreBuilds() {
@@ -34,7 +34,7 @@ export function MoreBuilds() {
           <motion.li key={b.name} variants={fadeUp}>
             <a href={b.repo} target="_blank" rel="noreferrer" className="group card flex h-full flex-col rounded-[20px] bg-[#0f0f0f] p-1.5">
               <div className="overflow-hidden rounded-[16px]">
-                <Scene className="h-[200px] transition-transform duration-700 ease-out group-hover:scale-[1.05]" seedShift={b.scene * 11 + 40} accent={accents[i]} />
+                <Scene className="h-[200px] transition-transform duration-700 ease-out group-hover:scale-[1.05]" photo={photos[i]} />
               </div>
               <div className="flex flex-1 flex-col px-5 pt-6 pb-5">
                 <h3 className="text-[19px] leading-snug tracking-[-0.03em] text-ink text-balance">{b.name}</h3>
