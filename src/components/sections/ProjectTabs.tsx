@@ -148,6 +148,17 @@ export function ProjectTabs() {
                 </AnimatePresence>
               </div>
               <div className="flex flex-wrap items-center gap-2 border-t border-line px-5 py-3.5">
+                {p.demoUrl?.startsWith("https://") && (
+                  <a
+                    href={p.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Try ${p.name} live demo (opens in a new tab)`}
+                    className="inline-flex h-8 items-center gap-1.5 rounded-full bg-live px-3.5 text-[13px] text-black transition-colors hover:bg-live/85"
+                  >
+                    Try live demo <ArrowUpRight className="h-3.5 w-3.5" />
+                  </a>
+                )}
                 <a
                   href={p.repo}
                   target="_blank"

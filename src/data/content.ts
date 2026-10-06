@@ -68,6 +68,8 @@ export type Project = {
   flow: string[];
   stack: string[];
   repo: string;
+  /** Verified public deployment; keep the GitHub source link separate. */
+  demoUrl?: string;
   mock: MockKind;
   topic: string;
 };
@@ -94,8 +96,9 @@ export const projects: Project[] = [
     description:
       "The model reads the live schema, writes SQL for your question and remembers the conversation for follow-ups. A guard lets only read-only queries run, and a second pass explains the result in words a non-engineer can use.",
     flow: ["Read schema", "Generate SQL", "Read-only guard", "Execute", "Explain"],
-    stack: ["Azure OpenAI", "SQLAlchemy", "SQLite", "Streamlit"],
+    stack: ["Groq · GPT-OSS", "SQLAlchemy", "SQLite", "Streamlit"],
     repo: "https://github.com/Nitesh-kelwani/SQL-Chatbot",
+    demoUrl: "https://sql-chatbot-agent.streamlit.app/",
     mock: "sql",
     topic: "NL to SQL",
   },
@@ -107,8 +110,9 @@ export const projects: Project[] = [
     description:
       "A tool-calling agent over a library of PDFs. It chooses when to search, scopes retrieval to the documents you pick, and answers with the file and page behind every claim.",
     flow: ["Parse PDFs", "Chunk + embed", "Agent picks a tool", "Scoped search", "Answer with pages"],
-    stack: ["LangChain", "Azure OpenAI", "FAISS", "FastAPI", "Streamlit"],
+    stack: ["LangChain", "Groq · GPT-OSS", "FastEmbed + FAISS", "FastAPI", "Streamlit"],
     repo: "https://github.com/Nitesh-kelwani/Document-Q-A-Chatbot",
+    demoUrl: "https://document-q-a-chatbot-agent.streamlit.app/",
     mock: "docqa",
     topic: "Agents",
   },

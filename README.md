@@ -35,6 +35,16 @@ npm run dev      # http://localhost:5173
 npm run build    # type-check + production build into dist/
 ```
 
+## Public project demos
+
+SQL Chatbot: https://sql-chatbot-agent.streamlit.app/
+
+Document Q&A: https://document-q-a-chatbot-agent.streamlit.app/
+
+Both deployments are public and were verified with sample questions. Each project now has a **Try live demo** button
+beside **View source**. Update `demoUrl` in `src/data/content.ts` if the hosting address changes. The app-window
+animations remain illustrative; use the button to interact with the actual app.
+
 ## Deploy
 
 Import the repo in Vercel. It detects Vite automatically (build `npm run build`, output `dist`). Every push to `main`
